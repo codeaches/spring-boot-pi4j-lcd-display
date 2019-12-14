@@ -52,7 +52,7 @@ public class GpioLCDConfiguration {
   @PreDestroy
   void preDestroy() {
 
-    if (gpioController.isShutdown()) {
+    if (!gpioController().isShutdown()) {
       gpioController().shutdown();
     }
   }
