@@ -36,10 +36,17 @@ public class GpioLCDConfiguration {
         RaspiPin.GPIO_16, // LCD data bit D6
         RaspiPin.GPIO_01); // LCD data bit D7
 
+    log.info("GpioLcdDisplay initialized");
+
     // clear LCD
+    lcd().clear(LCD_ROW_1);
+    lcd().clear(LCD_ROW_2);
+
     lcd.clear();
+    log.info("LCD cleared");
 
     lcd.write(GpioLCDConfiguration.LCD_ROW_1, "Hello");
+    log.info("Wrote Hello to LCD row 1");
 
     return lcd;
   }
