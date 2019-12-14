@@ -23,15 +23,15 @@ public class GpioLCDConfiguration {
   public GpioLcdDisplay lcd() {
 
     // Setup wiringPi
-    log.info("Gpio.wiringPiSetupGpio initializing");
+    log.info("Gpio.wiringPiSetupGpio initializing...");
 
     if (Gpio.wiringPiSetupGpio() == -1) {
-      throw new RuntimeException("Gpio.wiringPiSetupGpio failed");
+      throw new RuntimeException("Gpio.wiringPiSetupGpio failed...");
     }
 
-    log.info("Gpio.wiringPiSetupGpio completed");
+    log.info("Gpio.wiringPiSetupGpio completed...");
 
-    GpioLcdDisplay lcd = new GpioLcdDisplay(2, // number of rows supported by LCD
+    GpioLcdDisplay out = new GpioLcdDisplay(2, // number of rows supported by LCD
         16, // number of columns supported by LCD
         RaspiPin.GPIO_09, // LCD RS pin
         RaspiPin.GPIO_08, // LCD strobe pin
@@ -42,20 +42,7 @@ public class GpioLCDConfiguration {
 
     log.info("GpioLcdDisplay initialized");
 
-    // clear LCD
-    lcd.clear(LCD_ROW_1);
-    lcd.clear(LCD_ROW_2);
-
-    lcd.clear();
-    log.info("LCD cleared");
-
-    lcd.write(GpioLCDConfiguration.LCD_ROW_1, "Hello");
-    log.info("Wrote Hello to LCD row 1");
-
-    lcd.write(GpioLCDConfiguration.LCD_ROW_2, "Hello");
-    log.info("Wrote Hello to LCD row 2");
-
-    return lcd;
+    return out;
   }
 
   @PreDestroy
