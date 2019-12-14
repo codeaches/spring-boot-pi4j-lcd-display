@@ -19,7 +19,7 @@ public class GpioLCDConfiguration {
   public final static int LCD_ROW_1 = 0;
   public final static int LCD_ROW_2 = 1;
 
-  @Bean
+  @Bean("lcd")
   public GpioLcdDisplay lcd() {
 
     // Setup wiringPi
