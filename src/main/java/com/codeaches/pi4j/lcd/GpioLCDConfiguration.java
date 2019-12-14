@@ -43,8 +43,8 @@ public class GpioLCDConfiguration {
     log.info("GpioLcdDisplay initialized");
 
     // clear LCD
-    lcd().clear(LCD_ROW_1);
-    lcd().clear(LCD_ROW_2);
+    lcd.clear(LCD_ROW_1);
+    lcd.clear(LCD_ROW_2);
 
     lcd.clear();
     log.info("LCD cleared");
