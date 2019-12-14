@@ -20,16 +20,12 @@ public class GpioLCDConfiguration {
   public final static int LCD_ROW_2 = 1;
 
   @Bean("lcd")
-  public GpioLcdDisplay lcd() {
+  public GpioLcdDisplay lcd() throws Exception {
 
     // Setup wiringPi
-    log.info("Gpio.wiringPiSetupGpio initializing...");
-
     if (Gpio.wiringPiSetupGpio() == -1) {
       throw new RuntimeException("Gpio.wiringPiSetupGpio failed...");
     }
-
-    log.info("Gpio.wiringPiSetupGpio completed...");
 
     GpioLcdDisplay out = new GpioLcdDisplay(2, // number of rows supported by LCD
         16, // number of columns supported by LCD
@@ -42,11 +38,19 @@ public class GpioLCDConfiguration {
 
     log.info("GpioLcdDisplay initialized");
 
+    // clear LCD
+    out.clear();
+    Thread.sleep(1000);
+    // write line 1 to LCD
+    out.write(LCD_ROW_1, "- RPi LCD Java -");
+
+    log.info("RPi LCD Java");
+
     return out;
   }
 
   @PreDestroy
-  void preDestroy() {
+  void preDestroy() throws Exception {
 
     lcd().clear(LCD_ROW_1);
     lcd().clear(LCD_ROW_2);
