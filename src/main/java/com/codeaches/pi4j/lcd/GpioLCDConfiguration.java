@@ -11,6 +11,7 @@ import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.wiringpi.Gpio;
 
 @Configuration
 public class GpioLCDConfiguration {
@@ -28,7 +29,10 @@ public class GpioLCDConfiguration {
   @Bean("lcd")
   public GpioLcdDisplay lcd() {
 
-    gpioController();
+    // Setup wiringPi
+    if (Gpio.wiringPiSetup() == -1) {
+      throw new RuntimeException("Gpio.wiringPiSetup failed");
+    }
 
     return new GpioLcdDisplay(2, // number of rows supported by LCD
         16, // number of columns supported by LCD
