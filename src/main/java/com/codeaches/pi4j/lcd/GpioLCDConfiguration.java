@@ -4,13 +4,10 @@ import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.Gpio;
 
@@ -21,15 +18,6 @@ public class GpioLCDConfiguration {
 
   public final static int LCD_ROW_1 = 0;
   public final static int LCD_ROW_2 = 1;
-
-  @Bean
-  public GpioController gpioController() {
-    System.out.println("GpioController instance created");
-    return GpioFactory.getInstance();
-  }
-
-  @Autowired
-  GpioController gpioController;
 
   @Bean("lcd")
   public GpioLcdDisplay lcd() {
@@ -52,9 +40,9 @@ public class GpioLCDConfiguration {
   @PreDestroy
   void preDestroy() {
 
-    if (!gpioController().isShutdown()) {
-      gpioController().shutdown();
-    }
-  }
+    lcd().clear(LCD_ROW_1);
+    lcd().clear(LCD_ROW_2);
 
+    log.info("LCD rows cleared");
+  }
 }
