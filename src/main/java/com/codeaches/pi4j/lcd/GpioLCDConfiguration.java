@@ -24,6 +24,7 @@ public class GpioLCDConfiguration {
 
   @Bean
   public GpioController gpioController() {
+    System.out.println("GpioController instance created");
     return GpioFactory.getInstance();
   }
 
@@ -52,7 +53,7 @@ public class GpioLCDConfiguration {
   void preDestroy() {
 
     if (gpioController.isShutdown()) {
-      gpioController.shutdown();
+      gpioController().shutdown();
     }
   }
 
