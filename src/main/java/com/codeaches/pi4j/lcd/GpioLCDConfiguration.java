@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.pi4j.component.lcd.LCDTextAlignment;
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.Gpio;
@@ -27,7 +28,7 @@ public class GpioLCDConfiguration {
       throw new RuntimeException("Gpio.wiringPiSetupGpio failed");
     }
 
-    return new GpioLcdDisplay(2, // number of rows supported by LCD
+    GpioLcdDisplay lcd = new GpioLcdDisplay(2, // number of rows supported by LCD
         16, // number of columns supported by LCD
         RaspiPin.GPIO_09, // LCD RS pin
         RaspiPin.GPIO_08, // LCD strobe pin
@@ -35,6 +36,10 @@ public class GpioLCDConfiguration {
         RaspiPin.GPIO_15, // LCD data bit D5
         RaspiPin.GPIO_16, // LCD data bit D6
         RaspiPin.GPIO_01); // LCD data bit D7
+
+    lcd.write(GpioLCDConfiguration.LCD_ROW_1, "Hello", LCDTextAlignment.ALIGN_CENTER);
+
+    return lcd;
   }
 
   @PreDestroy
