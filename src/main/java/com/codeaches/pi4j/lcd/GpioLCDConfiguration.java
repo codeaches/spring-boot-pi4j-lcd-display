@@ -4,6 +4,7 @@ import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,18 +27,15 @@ public class GpioLCDConfiguration {
     return GpioFactory.getInstance();
   }
 
+  @Autowired
+  GpioController gpioController;
+
   @Bean("lcd")
   public GpioLcdDisplay lcd() {
 
-    System.out.println("Setting up Gpio wiring Pi");
-
     // Setup wiringPi
-    int result = Gpio.wiringPiSetupGpio();
-
-    if (result == -1) {
+    if (Gpio.wiringPiSetupGpio() == -1) {
       throw new RuntimeException("Gpio.wiringPiSetupGpio failed");
-    } else {
-      log.info("Gpio.wiringPiSetupGpio successful with a return value " + result);
     }
 
     return new GpioLcdDisplay(2, // number of rows supported by LCD
@@ -53,8 +51,8 @@ public class GpioLCDConfiguration {
   @PreDestroy
   void preDestroy() {
 
-    if (!gpioController().isShutdown()) {
-      gpioController().shutdown();
+    if (gpioController.isShutdown()) {
+      gpioController.shutdown();
     }
   }
 
