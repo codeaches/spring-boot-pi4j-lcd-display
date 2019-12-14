@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.pi4j.component.lcd.LCDTextAlignment;
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.Gpio;
@@ -37,7 +36,10 @@ public class GpioLCDConfiguration {
         RaspiPin.GPIO_16, // LCD data bit D6
         RaspiPin.GPIO_01); // LCD data bit D7
 
-    lcd.write(GpioLCDConfiguration.LCD_ROW_1, "Hello", LCDTextAlignment.ALIGN_CENTER);
+    // clear LCD
+    lcd.clear();
+
+    lcd.write(GpioLCDConfiguration.LCD_ROW_1, "Hello");
 
     return lcd;
   }
