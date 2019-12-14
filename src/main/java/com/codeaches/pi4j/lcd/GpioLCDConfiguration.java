@@ -30,8 +30,12 @@ public class GpioLCDConfiguration {
   public GpioLcdDisplay lcd() {
 
     // Setup wiringPi
-    if (Gpio.wiringPiSetup() == -1) {
-      throw new RuntimeException("Gpio.wiringPiSetup failed");
+    int result = Gpio.wiringPiSetupGpio();
+
+    if (result == -1) {
+      throw new RuntimeException("Gpio.wiringPiSetupGpio failed");
+    } else {
+      log.info("Gpio.wiringPiSetupGpio successful with a return value " + result);
     }
 
     return new GpioLcdDisplay(2, // number of rows supported by LCD
