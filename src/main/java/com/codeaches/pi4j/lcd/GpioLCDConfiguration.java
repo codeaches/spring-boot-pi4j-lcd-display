@@ -19,7 +19,7 @@ public class GpioLCDConfiguration {
 
   public final static int LCD_ROW_1 = 0;
   public final static int LCD_ROW_2 = 1;
- 
+
   @Bean
   public GpioController gpioController() {
     return GpioFactory.getInstance();
@@ -27,6 +27,8 @@ public class GpioLCDConfiguration {
 
   @Bean("lcd")
   public GpioLcdDisplay lcd() {
+
+    gpioController();
 
     return new GpioLcdDisplay(2, // number of rows supported by LCD
         16, // number of columns supported by LCD
