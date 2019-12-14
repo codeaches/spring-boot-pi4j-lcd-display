@@ -29,6 +29,8 @@ public class GpioLCDConfiguration {
   @Bean("lcd")
   public GpioLcdDisplay lcd() {
 
+    System.out.println("Setting up Gpio wiring Pi");
+
     // Setup wiringPi
     int result = Gpio.wiringPiSetupGpio();
 
