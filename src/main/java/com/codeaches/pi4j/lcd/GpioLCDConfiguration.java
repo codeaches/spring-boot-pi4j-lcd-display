@@ -19,13 +19,17 @@ public class GpioLCDConfiguration {
   public final static int LCD_ROW_1 = 0;
   public final static int LCD_ROW_2 = 1;
 
-  @Bean("lcd")
+  @Bean
   public GpioLcdDisplay lcd() {
 
     // Setup wiringPi
+    log.info("Gpio.wiringPiSetupGpio initializing");
+
     if (Gpio.wiringPiSetupGpio() == -1) {
       throw new RuntimeException("Gpio.wiringPiSetupGpio failed");
     }
+
+    log.info("Gpio.wiringPiSetupGpio completed");
 
     GpioLcdDisplay lcd = new GpioLcdDisplay(2, // number of rows supported by LCD
         16, // number of columns supported by LCD
@@ -47,6 +51,9 @@ public class GpioLCDConfiguration {
 
     lcd.write(GpioLCDConfiguration.LCD_ROW_1, "Hello");
     log.info("Wrote Hello to LCD row 1");
+
+    lcd.write(GpioLCDConfiguration.LCD_ROW_2, "Hello");
+    log.info("Wrote Hello to LCD row 2");
 
     return lcd;
   }
