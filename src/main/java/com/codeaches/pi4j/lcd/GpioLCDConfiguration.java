@@ -33,7 +33,7 @@ public class GpioLCDConfiguration {
   @Bean("lcd")
   public GpioLcdDisplay lcd() throws Exception {
 
-    System.out.println("<--Pi4J--> GPIO 4 bit LCD example programm..");
+    System.out.println("<--Pi4J--> GPIO 4 bit LCD example programm.");
 
     // create gpio controller
     final GpioController gpio = GpioFactory.getInstance();
