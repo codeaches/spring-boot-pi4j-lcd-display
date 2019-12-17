@@ -1,7 +1,6 @@
 package com.codeaches.pi4j.lcd;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.annotation.PreDestroy;
 
@@ -16,10 +15,7 @@ import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 @Configuration
 public class GpioLCDConfiguration {
@@ -61,16 +57,16 @@ public class GpioLCDConfiguration {
         gpio.provisionDigitalInputPin(RaspiPin.GPIO_12, "B4", PinPullResistance.PULL_UP) };
 
     // create and register gpio pin listener
-    gpio.addListener(new GpioPinListenerDigital() {
-      @Override
-      public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-        if (event.getState() == PinState.LOW) {
-          lcd.writeln(LCD_ROW_2, event.getPin().getName() + " PRESSED", LCDTextAlignment.ALIGN_CENTER);
-        } else {
-          lcd.writeln(LCD_ROW_2, event.getPin().getName() + " RELEASED", LCDTextAlignment.ALIGN_CENTER);
-        }
-      }
-    }, myButtons);
+//    gpio.addListener(new GpioPinListenerDigital() {
+//      @Override
+//      public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+//        if (event.getState() == PinState.LOW) {
+//          lcd.writeln(LCD_ROW_2, event.getPin().getName() + " PRESSED", LCDTextAlignment.ALIGN_CENTER);
+//        } else {
+//          lcd.writeln(LCD_ROW_2, event.getPin().getName() + " RELEASED", LCDTextAlignment.ALIGN_CENTER);
+//        }
+//      }
+//    }, myButtons);
 
     // clear LCD
     lcd.clear();
@@ -134,13 +130,14 @@ public class GpioLCDConfiguration {
     SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
     // update time
-    while (true) {
-      // write time to line 2 on LCD
-      if (gpio.isHigh(myButtons)) {
-        lcd.writeln(LCD_ROW_2, formatter.format(new Date()), LCDTextAlignment.ALIGN_CENTER);
-      }
-      Thread.sleep(1000);
-    }
+//    while (true) {
+//      // write time to line 2 on LCD
+//      if (gpio.isHigh(myButtons)) {
+//        lcd.writeln(LCD_ROW_2, formatter.format(new Date()), LCDTextAlignment.ALIGN_CENTER);
+//      }
+//      Thread.sleep(1000);
+//    }
+    return lcd;
   }
   // stop all GPIO activity/threads by shutting down the GPIO controller
   // (this method will forcefully shutdown all GPIO monitoring threads and
